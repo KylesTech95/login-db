@@ -21,23 +21,23 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: account_types; Type: TABLE; Schema: public; Owner: postgres
+-- Name: accounts; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.account_types (
-    type_id integer NOT NULL,
+CREATE TABLE public.accounts (
+    account_id integer NOT NULL,
     type character varying(30) NOT NULL,
     authentication boolean DEFAULT false
 );
 
 
-ALTER TABLE public.account_types OWNER TO postgres;
+ALTER TABLE public.accounts OWNER TO postgres;
 
 --
--- Name: account_types_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: accounts_account_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.account_types_type_id_seq
+CREATE SEQUENCE public.accounts_account_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -46,13 +46,13 @@ CREATE SEQUENCE public.account_types_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.account_types_type_id_seq OWNER TO postgres;
+ALTER TABLE public.accounts_account_id_seq OWNER TO postgres;
 
 --
--- Name: account_types_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: accounts_account_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.account_types_type_id_seq OWNED BY public.account_types.type_id;
+ALTER SEQUENCE public.accounts_account_id_seq OWNED BY public.accounts.account_id;
 
 
 --
@@ -62,7 +62,9 @@ ALTER SEQUENCE public.account_types_type_id_seq OWNED BY public.account_types.ty
 CREATE TABLE public.users (
     user_id integer NOT NULL,
     name character varying(30) NOT NULL,
-    phone character varying(15) NOT NULL
+    account_id integer NOT NULL,
+    username character varying(30),
+    password character varying(30)
 );
 
 
@@ -91,10 +93,10 @@ ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
 
 
 --
--- Name: account_types type_id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: accounts account_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.account_types ALTER COLUMN type_id SET DEFAULT nextval('public.account_types_type_id_seq'::regclass);
+ALTER TABLE ONLY public.accounts ALTER COLUMN account_id SET DEFAULT nextval('public.accounts_account_id_seq'::regclass);
 
 
 --
@@ -105,45 +107,41 @@ ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.u
 
 
 --
--- Data for Name: account_types; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: accounts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.accounts VALUES (1, 'administrator', true);
+INSERT INTO public.accounts VALUES (2, 'regular', true);
+INSERT INTO public.accounts VALUES (3, 'guest', false);
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.users VALUES (1, 'kyle', 2, 'kylesTech95', 'P@ssw0rd123!');
 
 
 --
--- Name: account_types_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: accounts_account_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.account_types_type_id_seq', 1, false);
+SELECT pg_catalog.setval('public.accounts_account_id_seq', 3, true);
 
 
 --
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_user_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_user_id_seq', 1, true);
 
 
 --
--- Name: account_types account_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: accounts accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.account_types
-    ADD CONSTRAINT account_types_pkey PRIMARY KEY (type_id);
-
-
---
--- Name: users users_phone_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_phone_key UNIQUE (phone);
+ALTER TABLE ONLY public.accounts
+    ADD CONSTRAINT accounts_pkey PRIMARY KEY (account_id);
 
 
 --
