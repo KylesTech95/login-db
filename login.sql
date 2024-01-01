@@ -119,7 +119,7 @@ INSERT INTO public.accounts VALUES (3, 'guest', false);
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.users VALUES (1, 'kyle', 2, 'kylesTech95', 'P@ssw0rd123!');
+INSERT INTO public.users VALUES (1, 'kyle', 2, 'myUsername', 'P@ssw0rd123!');
 
 
 --
