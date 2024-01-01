@@ -96,7 +96,6 @@ CREATE_ACCOUNT(){
     else
         CREATE_ACCOUNT "\nGood Work!"
     fi
-
     
 
 
