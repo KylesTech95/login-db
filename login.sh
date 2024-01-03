@@ -24,8 +24,6 @@ MENU(){
     *) MAIN_MENU "Please enter a valid option." ;;
     esac
 }
-
-
 CREDENTIALS(){
     if [[ $1 ]]
     then
@@ -55,7 +53,6 @@ LOGIN(){
     CREDENTIALS
     fi
 }
-
 # Create account
 LIST_ACCOUNT_TYPES(){
     if [[ $1 ]]
@@ -94,10 +91,42 @@ CREATE_ACCOUNT(){
         CREATE_ACCOUNT "\nInvalid option.\nBack to CREATE_ACCOUNT"
         fi
     else
-        CREATE_ACCOUNT "\nGood Work!"
+        echo -e "\nEnter your name"
+        sleep .25
+        read NAME_ENTERED
+        # enter username
+        echo -e "\nEnter a username"
+        sleep .25
+        read USERNAME_ENTERED
+        # We need to determine which account_id does NOT require authentication (guest)
+        NO_AUTHENTICATION=$($PSQL "select account_id from accounts where authentication='f'")
+        # (if user selected guest)
+        if [[ $ACCOUNT_ID_SELECTED -eq $NO_AUTHENTICATION ]]
+            then
+            # no password is required
+            INSERT_USER=$($PSQL "insert into users(name,account_id,username) values('$NAME_ENTERED',$ACCOUNT_ID_SELECTED,'$USERNAME_ENTERED')")
+                if [[ $INSERT_USER == 'INSERT 0 1' ]]
+                then
+                echo -e "\n$NAME_ENTERED's account is created"
+                fi
+        else
+        # program a password
+        echo -e "\nEnter a password"
+        sleep .25
+        read PASSWORD_ENTERED
+        # insert user information
+        INSERT_USER=$($PSQL "insert into users(name,account_id,username,password) values('$NAME_ENTERED',$ACCOUNT_ID_SELECTED,'$USERNAME_ENTERED','$PASSWORD_ENTERED')")
+                if [[ $INSERT_USER == 'INSERT 0 1' ]]
+                then
+                echo -e "\n$NAME_ENTERED's account is created"
+                fi
+        fi
     fi
     
 
 
+}
+EXIT(){
+    echo -e "\nThank you for visiting the LOGIN experience!"
 }
 MENU  
