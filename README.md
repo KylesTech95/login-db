@@ -1,19 +1,20 @@
-![iamge](https://github.com/KylesTech95/login-db/blob/main/media/Screenshot%202024-01-01%208.46.28%20AM.png?raw=true)
+<div style="text-align:center"><img src="https://github.com/KylesTech95/login-db/blob/main/media/main_menu.png?raw=true"/></div>
+
 # Account login database
 Account login database created with PSQL & bash scripting
 # How to enter menu
 - Open terminal of your choosing
 - Enter folder "login-db"
 - type ``` ./login.sh ```
-1. ![iamge](https://github.com/KylesTech95/login-db/blob/main/media/image.png?raw=true)
+1. <div style="text-align:center"><img src="https://github.com/KylesTech95/login-db/blob/main/media/image.png?raw=true"/></div>
 ## Select from the given actions (login)
-2. ![iamge](https://github.com/KylesTech95/login-db/blob/main/media/Screenshot%202024-01-01%208.47.11%20AM.png?raw=true)
+2. <div style="text-align:center"><img src="https://github.com/KylesTech95/login-db/blob/main/media/actions.png?raw=true"/></div>
 ## Enter a valid username
-3. ![iamge](https://github.com/KylesTech95/login-db/blob/main/media/Screenshot%202024-01-01%208.48.19%20AM.png?raw=true)
+3. <div style="text-align:center"><img src="https://github.com/KylesTech95/login-db/blob/main/media/valid_username.png?raw=true"/></div>
 ## Enter an invalid username
-4. ![iamge](https://github.com/KylesTech95/login-db/blob/main/media/Screenshot%202024-01-01%208.48.48%20AM.png?raw=true)
+4. <div style="text-align:center"><img src="https://github.com/KylesTech95/login-db/blob/main/media/invalid_username.png?raw=true"/></div>
 ## Create account
-5. ![iamge](https://github.com/KylesTech95/login-db/blob/main/media/Screenshot%202024-01-01%208.49.41%20AM.png?raw=true)
+5. <div style="text-align:center"><img src="https://github.com/KylesTech95/login-db/blob/main/media/create_account.png?raw=true"/></div>
 
 
 
