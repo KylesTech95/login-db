@@ -25,6 +25,46 @@ MENU(){
     esac
 }
 CREDENTIALS(){
+    # password attempt function
+    # password attempt
+    PASSWORD_ATTEMPT(){
+    NEWVAR=$(echo `expr $1 - 1`)
+    if [[ $1 -gt 1 ]]
+    then
+        echo -e "\nSecond chance, what is your password?"
+        sleep .25
+        read PASSWORD
+        # retrieve password from users table
+        CURRENT_PASSWORD=$($PSQL "select password from users where password='$PASSWORD'")
+        if [[ -z $CURRENT_PASSWORD ]]
+        then
+            # 3 password attempts with this function
+            PASSWORD_ATTEMPT $NEWVAR
+        else
+            echo -e "\nWelcome, you have successfully logged in"
+        sleep 1
+        MENU
+        fi
+    else
+    echo -e "\nLast chance, what is your password?"
+        sleep .25
+        read PASSWORD
+        # retrieve password from users table
+        CURRENT_PASSWORD=$($PSQL "select password from users where password='$PASSWORD'")
+        if [[ -z $CURRENT_PASSWORD ]]
+        then
+            # 3 password attempts with this function
+            MENU "\nToo many pw attempts"
+        else
+            echo -e "\nWelcome, you have successfully logged in"
+        sleep 1
+        MENU
+        fi
+    fi
+
+
+        
+    }
     if [[ $1 ]]
     then
     echo -e "\n$1"
@@ -32,14 +72,43 @@ CREDENTIALS(){
     fi
     echo -e "\nEnter Username"
     read USERNAME
+    # What is the returning user's user_id
     USER_ID=$($PSQL "select user_id from users where username='$USERNAME'")
+    # What is the returning user's account_id ? 
+    ACCOUNT_ID=$($PSQL "select account_id from users where username='$USERNAME'")
+    NO_AUTHENTICATION=$($PSQL "select account_id from accounts where authentication='f'")
     # if username contains special characters
     if [[ ! $USERNAME =~ ^[a-zA-Z0-9]+$ || -z $USER_ID ]]
-    then
-        sleep .25
-        CREDENTIALS "\nSomething went wrong"
-    else
-        echo -e "\nUsername passed"
+        then
+            sleep .75
+            CREDENTIALS "Something went wrong"
+        else
+            echo -e "\nUsername passed"
+            sleep .75
+            if [[ $ACCOUNT_ID -eq $NO_AUTHENTICATION ]]
+                then
+                echo -e "\nWelcome, you have successfully logged in"
+                sleep 1
+                MENU
+            else
+            echo -e "\nWhat is your password? (3 attempts)"
+            sleep .25
+            read PASSWORD
+            # retrieve password from users table
+            CURRENT_PASSWORD=$($PSQL "select password from users where password='$PASSWORD'")
+            if [[ -z $CURRENT_PASSWORD ]]
+            then
+                # 3 password attempts with this function
+                sleep .5
+                PASSWORD_ATTEMPT 2
+            else
+                echo -e "\nWelcome, you have successfully logged in"
+            sleep 1
+            MENU
+            fi
+
+            fi
+        
     fi
 }
 # login
